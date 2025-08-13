@@ -1,0 +1,69 @@
+<body>
+    <h1>Quiz Game 🎯</h1>
+
+    <div id="quiz-container">
+        <p id="question"></p>
+
+        <div id="options"></div>
+
+        <button onclick="nextQuestion()">Next Question</button>
+        <p id="score"></p>
+    </div>
+
+    <script>
+        // Step 2: Questions and answers
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["Paris", "London", "Berlin", "Rome"],
+                correct: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Mars", "Jupiter", "Saturn"],
+                correct: "Mars"
+            },
+            {
+                question: "Who wrote 'Hamlet'?",
+                options: ["Shakespeare", "Newton", "Einstein", "Homer"],
+                correct: "Shakespeare"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            let questionData = quizData[currentQuestionIndex];
+            document.getElementById("question").innerText = questionData.question;
+
+            let optionsHtml = "";
+            questionData.options.forEach(option => {
+                optionsHtml += `<button onclick="checkAnswer('${option}')">${option}</button><br>`;
+            });
+            document.getElementById("options").innerHTML = optionsHtml;
+        }
+
+        function checkAnswer(selectedOption) {
+            let correctAnswer = quizData[currentQuestionIndex].correct;
+            if (selectedOption === correctAnswer) {
+                score++;
+                alert("✅ Correct!");
+            } else {
+                alert("❌ Wrong! Correct answer is: " + correctAnswer);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("quiz-container").innerHTML = `<h2>Game Over! 🎉 Your score: ${score}/${quizData.length}</h2>`;
+            }
+        }
+
+        // Load the first question
+        loadQuestion();
+    </script>
+</body>
